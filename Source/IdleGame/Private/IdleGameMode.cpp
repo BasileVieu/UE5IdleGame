@@ -1,5 +1,6 @@
 #include "IdleGameMode.h"
 #include "IdleHUD.h"
+#include "TiersManager.h"
 #include "Kismet/GameplayStatics.h"
 
 void AIdleGameMode::BeginPlay()
@@ -12,13 +13,26 @@ void AIdleGameMode::BeginPlay()
 	{
 		IdleHUD = Cast<AIdleHUD>(PlayerController->GetHUD());
 	}
+	
+	TiersManager->Setup();
+	
+	TiersManager->Update();
 }
 
 void AIdleGameMode::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 	
-	Cash += Cash < 10 ? 1 : Cash / 30;
+	Timer += DeltaSeconds;
 	
-	IdleHUD->UpdateCashText(Cash);
+	if (Timer >= 1.0)
+	{
+		Timer -= 1.0;
+		
+		TiersManager->Update();
+	
+		Cash += TiersManager->GetFinalProduction();
+	
+		IdleHUD->UpdateCashText(Cash);
+	}
 }

@@ -39,7 +39,7 @@ FString FFormatNumbers::Format(double Value)
 		Unit = FString(1, &FirstUnitChar) + FString(1, &SecondUnitChar);
 	}
 	
-	UE_LOG(LogTemp, Warning, TEXT("%f   %d   %f   %d   %s"), Value, n, m, Units.Num(), *Unit);
+	//UE_LOG(LogTemp, Warning, TEXT("%f   %d   %f   %d   %s"), Value, n, m, Units.Num(), *Unit);
 	
 	return FString::SanitizeFloat(FMath::Floor(m * 100) / 100, 2) + Unit;
 }
