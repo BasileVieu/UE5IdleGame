@@ -5,19 +5,29 @@
 #include "Components/TextBlock.h"
 #include "IdleHUDWidget.generated.h"
 
+class UTierModifierDataAsset;
+class UTierModifierWidget;
+class UScrollBox;
+
 UCLASS()
 class IDLEGAME_API UIdleHUDWidget : public UUserWidget
 {
 	GENERATED_BODY()
 	
 public:
-	virtual void NativeConstruct() override;
-	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
+	void Init();
+	void AddTierDataWidget(UTierModifierDataAsset* InTierData);
 	
 	UFUNCTION()
-	void UpdateResource(double NewValue) const;
+	void UpdateCash(double InValue) const;
 	
 protected:
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UTierModifierWidget> TierDataWidgetClass;
+	
+	UPROPERTY(VisibleAnywhere, meta=(BindWidget))
+	UScrollBox* TierDataWidgetsContainer;
+	
 	UPROPERTY(VisibleAnywhere, meta=(BindWidget))
 	UTextBlock* CashText;
 };

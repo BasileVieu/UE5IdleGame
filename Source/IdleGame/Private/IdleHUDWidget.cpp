@@ -1,21 +1,27 @@
 #include "IdleHUDWidget.h"
 #include "FormatNumbers.h"
+#include "Components/ScrollBox.h"
 #include "Components/TextBlock.h"
+#include "TiersSubsystem.h"
 
-void UIdleHUDWidget::NativeConstruct()
+void UIdleHUDWidget::Init()
 {
-	Super::NativeConstruct();
+	GetGameInstance()->GetSubsystem<UTiersSubsystem>()->OnCashUpdated.AddUObject(this, &UIdleHUDWidget::UpdateCash);
 }
 
-void UIdleHUDWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
+void UIdleHUDWidget::AddTierDataWidget(UTierModifierDataAsset* InTierData)
 {
-	Super::NativeTick(MyGeometry, InDeltaTime);
+	/*UTierModifierWidget* TierDataWidget = CreateWidget<UTierModifierWidget>(PlayerController, TierDataWidgetClass);
+	
+	TierDataWidget->Init(InTierData);
+	
+	TierDataWidgetsContainer->AddChild(TierDataWidget);*/
 }
 
-void UIdleHUDWidget::UpdateResource(double Value) const
+void UIdleHUDWidget::UpdateCash(double InValue) const
 {
 	if (CashText)
 	{
-		CashText->SetText(FText::FromString(FFormatNumbers::Format(Value)));
+		CashText->SetText(FText::FromString(FFormatNumbers::Format(InValue)));
 	}
 }

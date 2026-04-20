@@ -2,18 +2,19 @@
 
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
-#include "TierData.generated.h"
+#include "TierModifierDataAsset.generated.h"
 
 UENUM(BlueprintType)
 enum class ETierDataType : uint8
 {
 	ParticleLifetime,
 	ParticleCount,
-	SpawnRate
+	SpawnRate,
+	Velocity
 };
 
 UCLASS()
-class IDLEGAME_API UTierData : public UDataAsset
+class IDLEGAME_API UTierModifierDataAsset : public UDataAsset
 {
 	GENERATED_BODY()
 	
